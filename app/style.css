@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.courses-box {
+    margin: 0px 90px 0px 90px;
+    width: 40%;
+    border: 1px solid black;
+    padding: 10px;
+    height: 300px;
+    width: 200px;
+}
+
+.available-courses,
+.selected-courses {
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.available-courses {
+    float: left;
+}
+
+.selected-courses {
+    float: right;
+}
+
+.available-courses .course-unit,
+.selected-courses .course-unit {
+    border: 1px solid black;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.available-courses .course-unit:nth-child(even),
+.selected-courses .course-unit:nth-child(even) {
+    background-color: rgb(221, 239, 221);
+}
+
+.available-courses .course-unit.selected,
+.selected-courses .course-unit.selected {
+    background-color: deepskyblue;
+}
+
+.total-credit-counter {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#select-button {
+    display: block;
+    margin: 20px auto;
+}
+
+h1{
+    text-align: center;
+}
+h2{
+    font-size: 20px;
+    text-align: center;
+}
+
