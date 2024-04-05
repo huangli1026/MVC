@@ -1,6 +1,4 @@
-// Model => Retrieve, store, process data
 const Api = (() => {
-  // Fetch data from server
   const url = "http://localhost:4232/courseList";
   const getData = fetch(url).then((res) => res.json());
   return {
@@ -8,7 +6,6 @@ const Api = (() => {
   };
 })();
 
-// View => User interface
 const View = (() => {
   const domStr = {
     availableCoursesContainer: ".available-courses",
@@ -65,8 +62,6 @@ const View = (() => {
     updateTotalCredits
   };
 })();
-
-// Controller => Manage view and data & handle user actions
 const Controller = ((view, model) => {
   const { getData } = model;
   const { domStr } = view;

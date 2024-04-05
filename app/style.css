@@ -27,10 +27,12 @@ body {
 
 .available-courses {
     float: left;
+    font-size: small;
 }
 
 .selected-courses {
     float: right;
+    font-size: small;
 }
 
 .available-courses .course-unit,
