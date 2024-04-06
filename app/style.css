@@ -8,13 +8,13 @@ body {
     display: flex;
     justify-content: center;
     padding: 10px;
+    text-align: center;
 }
 
 .courses-box {
     margin: 0px 90px 0px 90px;
     width: 40%;
     border: 1px solid black;
-    padding: 10px;
     height: 300px;
     width: 200px;
 }
@@ -22,7 +22,8 @@ body {
 .available-courses,
 .selected-courses {
     overflow-y: auto;
-    max-height: 200px;
+    max-height: 250px;
+    width: 200px !important;
 }
 
 .available-courses {
@@ -31,7 +32,7 @@ body {
 }
 
 .selected-courses {
-    float: right;
+    float: left;
     font-size: small;
 }
 
@@ -42,8 +43,8 @@ body {
     cursor: pointer;
 }
 
-.available-courses .course-unit:nth-child(even),
-.selected-courses .course-unit:nth-child(even) {
+.available-courses .course-unit:nth-child(odd),
+.selected-courses .course-unit:nth-child(odd) {
     background-color: rgb(221, 239, 221);
 }
 
@@ -58,7 +59,7 @@ body {
 }
 
 #select-button {
-    display: block;
+    display: inline-block;
     margin: 20px auto;
 }
 
@@ -69,4 +70,9 @@ h2{
     font-size: 20px;
     text-align: center;
 }
+.course-title{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 0;
+  }
 

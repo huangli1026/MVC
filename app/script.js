@@ -1,8 +1,12 @@
 const Api = (() => {
   const url = "http://localhost:4232/courseList";
-  const getData = fetch(url).then((res) => res.json());
+
+  const getData = () => {
+    return fetch(url).then(response => response.json());
+  };
+
   return {
-    getData,
+    getData
   };
 })();
 
@@ -62,41 +66,84 @@ const View = (() => {
     updateTotalCredits
   };
 })();
-const Controller = ((view, model) => {
-  const { getData } = model;
-  const { domStr } = view;
+
+const Model = ((view, api) => {
   let totalCredits = 0;
   let coursesSelected = false;
+  let availableCourses = [];
+  let selectedCourses = [];
+
+  const getTotalCredits = () => totalCredits;
+
+  const setTotalCredits = (credits) => {
+    totalCredits = credits;
+  };
+
+  const getCoursesSelected = () => coursesSelected;
+
+  const setCoursesSelected = (selected) => {
+    coursesSelected = selected;
+  };
+
+  const getAvailableCourses = () => availableCourses;
+
+  const setAvailableCourses = (courses) => {
+    availableCourses = courses;
+  };
+
+  const getSelectedCourses = () => selectedCourses;
+
+  const setSelectedCourses = (courses) => {
+    selectedCourses = courses;
+  };
+
+  return {
+    getTotalCredits,
+    setTotalCredits,
+    getCoursesSelected,
+    setCoursesSelected,
+    getAvailableCourses,
+    setAvailableCourses,
+    getSelectedCourses,
+    setSelectedCourses
+  };
+})(View, Api);
+
+const Controller = ((view, model) => {
+  const { domStr, renderAvailableCourses, renderSelectedCourses, updateTotalCredits } = view;
+  const { getTotalCredits, setTotalCredits, getCoursesSelected, setCoursesSelected,
+    getAvailableCourses, setAvailableCourses, getSelectedCourses, setSelectedCourses } = model;
 
   const init = () => {
-    getData.then((data) => {
-      view.renderAvailableCourses(data);
+    Api.getData().then(data => {
+      setAvailableCourses(data);
+      renderAvailableCourses(data);
     });
   };
 
   const addCourseSelectionListener = () => {
-    document.querySelector(domStr.availableCoursesContainer).addEventListener('click', function(event) {
-      if (!coursesSelected) {
+    document.querySelector(domStr.availableCoursesContainer).addEventListener('click', function (event) {
+      if (!getCoursesSelected()) {
         const courseUnit = event.target.closest('.course-unit');
         if (courseUnit) {
           const credits = parseInt(courseUnit.dataset.credits);
           const isSelected = courseUnit.classList.toggle('selected');
-          if (isSelected && totalCredits + credits > 18) {
+          if (isSelected && getTotalCredits() + credits > 18) {
             alert("You can only choose up to 18 credits in one semester");
             courseUnit.classList.remove('selected');
             return;
           }
-          totalCredits += isSelected ? credits : -credits;
-          view.updateTotalCredits(totalCredits);
+          setTotalCredits(isSelected ? getTotalCredits() + credits : getTotalCredits() - credits);
+          updateTotalCredits(getTotalCredits());
         }
       }
     });
   };
 
   const addSelectButtonListener = () => {
-    document.querySelector(domStr.selectButton).addEventListener('click', function() {
+    document.querySelector(domStr.selectButton).addEventListener('click', function () {
       const selectedCourseUnits = document.querySelectorAll('.course-unit.selected');
-      const confirmationMessage = `You have chosen ${totalCredits} credits for this semester. You cannot change once you submit. Do you want to confirm?`;
+      const confirmationMessage = `You have chosen ${getTotalCredits()} credits for this semester. You cannot change once you submit. Do you want to confirm?`;
       if (confirm(confirmationMessage)) {
         const selectedCourses = Array.from(selectedCourseUnits).map(courseUnit => ({
           courseId: courseUnit.dataset.id,
@@ -104,11 +151,12 @@ const Controller = ((view, model) => {
           required: courseUnit.dataset.required === 'true',
           credit: parseInt(courseUnit.dataset.credits)
         }));
-        view.renderSelectedCourses(selectedCourses);
+        setSelectedCourses(selectedCourses);
+        renderSelectedCourses(selectedCourses);
         selectedCourseUnits.forEach(courseUnit => {
           courseUnit.remove();
         });
-        coursesSelected = true;
+        setCoursesSelected(true);
         document.querySelector(domStr.selectButton).disabled = true;
       }
     });
@@ -123,6 +171,6 @@ const Controller = ((view, model) => {
   return {
     bootstrap
   };
-})(View, Api);
+})(View, Model);
 
 Controller.bootstrap();
