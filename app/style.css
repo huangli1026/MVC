@@ -22,7 +22,7 @@ body {
 .available-courses,
 .selected-courses {
     overflow-y: auto;
-    max-height: 250px;
+    max-height: 300px;
     width: 200px !important;
 }
 
@@ -43,8 +43,8 @@ body {
     cursor: pointer;
 }
 
-.available-courses .course-unit:nth-child(odd),
-.selected-courses .course-unit:nth-child(odd) {
+.available-courses .course-unit:nth-child(even),
+.selected-courses .course-unit:nth-child(even) {
     background-color: rgb(221, 239, 221);
 }
 
@@ -74,5 +74,6 @@ h2{
     font-size: 18px;
     font-weight: bold;
     padding: 15px 0;
+    border: 1px solid black;
   }
 

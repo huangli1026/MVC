@@ -20,7 +20,7 @@ const View = (() => {
 
   const renderAvailableCourses = (courses) => {
     const container = document.querySelector(domStr.availableCoursesContainer);
-    container.innerHTML = "";
+    container.innerHTML = `<div class="course-title">Available Courses</div>`;
     courses.forEach(course => {
       const courseUnit = document.createElement('div');
       courseUnit.classList.add('course-unit');
@@ -38,7 +38,7 @@ const View = (() => {
 
   const renderSelectedCourses = (courses) => {
     const container = document.querySelector(domStr.selectedCoursesContainer);
-    container.innerHTML = "";
+    container.innerHTML = `<div class="course-title">Selected Courses</div>`;
     courses.forEach(course => {
       const courseUnit = document.createElement('div');
       courseUnit.classList.add('course-unit');
